@@ -1,3 +1,9 @@
+console.log("🧪 Action inputs:");
+console.log(core.getInput('markdown_file'));
+console.log(core.getInput('devto_api_key') ? "✅ Dev.to key present" : "❌ Dev.to key missing");
+console.log(core.getInput('medium_token') ? "✅ Medium token present" : "❌ Medium token missing");
+console.log(core.getInput('hashnode_api_key') ? "✅ Hashnode key present" : "❌ Hashnode key missing");
+
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
