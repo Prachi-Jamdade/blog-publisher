@@ -13,6 +13,7 @@
     "@actions/core": "^1.11.1",
     "axios": "^1.8.4",
     "cookiefile": "^1.0.10",
+    "is-plain-object": "^5.0.0",
     "puppeteer": "^24.6.1",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
