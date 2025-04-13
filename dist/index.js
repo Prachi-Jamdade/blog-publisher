@@ -36911,9 +36911,9 @@ async function publishToHashnode() {
     await publishToDevto();
     console.log('✅ Dev.to published!');
 
-    console.log('📤 Publishing to Medium...');
-    await publishToMedium();
-    console.log('✅ Medium published!');
+    // console.log('📤 Publishing to Medium...');
+    // await publishToMedium();
+    // console.log('✅ Medium published!');
 
     console.log('📤 Publishing to Hashnode...');
     await publishToHashnode();
