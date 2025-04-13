@@ -73,7 +73,7 @@ async function fetchHashnodePublicationId() {
     },
     {
       headers: {
-        Authorization: hashnodeApiKey,
+        Authorization: `Bearer ${hashnodeApiKey}`,
         'Content-Type': 'application/json'
       }
     }
