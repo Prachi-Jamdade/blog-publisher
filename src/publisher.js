@@ -49,27 +49,38 @@ async function publishToMedium() {
 
 // ─── Hashnode ───────────────────────────────────────────────────
 async function fetchHashnodePublicationId() {
-  const hashnodeApiKey = core.getInput('hashnode_api_key'); // Get the Hashnode API key from inputs
-  const res = await axios.post('https://gql.hashnode.com/', {
-    query: `
-      {
-        me {
-          publication {
-            _id
-            title
+  const hashnodeApiKey = core.getInput('hashnode_api_key');
+
+  const res = await axios.post(
+    'https://gql.hashnode.com/',
+    {
+      query: `
+        {
+          me {
+            publications {
+              _id
+              title
+            }
           }
         }
+      `
+    },
+    {
+      headers: {
+        Authorization: hashnodeApiKey,
+        'Content-Type': 'application/json'
       }
-    `
-  }, {
-    headers: {
-      Authorization: hashnodeApiKey,
-      'Content-Type': 'application/json'
     }
-  });
+  );
 
-  return res.data.data.me.publication._id;
+  const publications = res.data.data.me.publications;
+  if (!publications || publications.length === 0) {
+    throw new Error("No publications found for the user.");
+  }
+
+  return publications[0]._id; // assuming you're using the first publication
 }
+
 
 async function publishToHashnode() {
   const publicationId = await fetchHashnodePublicationId();
