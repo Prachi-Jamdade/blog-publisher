@@ -9,6 +9,7 @@ const { CookieFile } = require('cookiefile');
 const markdownPath = core.getInput('markdown_file') || './blog.md'; // Path to blog file
 const cookieFilePath = core.getInput('cookies_file') || './cookies.txt'; // Path to cookies file
 
+// Read blog content
 const content = fs.readFileSync(markdownPath, 'utf-8');
 const title = content.match(/^# (.*)/)[1]; // Extract title from markdown
 const markdownBody = content.replace(/^# .*\n/, ''); // Remove title from content for body
@@ -33,6 +34,7 @@ async function publishToDevto() {
 async function publishToMediumWithPuppeteer() {
   puppeteer.use(StealthPlugin());
 
+  // Read cookies from the provided cookie file
   const mediumCookies = new CookieFile(cookieFilePath).getCookies('https://medium.com');
   const cookies = mediumCookies.map(cookie => ({
     name: cookie.name,
