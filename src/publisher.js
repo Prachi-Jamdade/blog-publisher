@@ -36,6 +36,8 @@ async function publishToMediumWithPuppeteer() {
 
   // Read cookies from the provided cookie file
   const mediumCookies = new CookieFile(cookieFilePath).getCookies('https://medium.com');
+  console.log(mediumCookies);
+  
   const cookies = mediumCookies.map(cookie => ({
     name: cookie.name,
     value: cookie.value,
