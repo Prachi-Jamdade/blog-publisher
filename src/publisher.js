@@ -1,6 +1,8 @@
 const fs = require('fs');
 const axios = require('axios');
+const core = require('@actions/core');
 
+// Get inputs from GitHub Action
 const markdownPath = process.env.INPUT_MARKDOWN_FILE || 'blog.md';
 const content = fs.readFileSync(markdownPath, 'utf-8');
 const title = content.match(/^# (.*)/)[1];
@@ -8,7 +10,9 @@ const markdownBody = content.replace(/^# .*\n/, '');
 
 // ─── Dev.to ─────────────────────────────────────────────────────
 async function publishToDevto() {
-  console.log("Hi", process.env.DEVTO_API_KEY)
+  const devtoApiKey = core.getInput('devto_api_key'); // Get the API key from inputs
+  console.log("Hi", devtoApiKey);
+
   await axios.post('https://dev.to/api/articles', {
     article: {
       title,
@@ -17,15 +21,16 @@ async function publishToDevto() {
     }
   }, {
     headers: {
-      'api-key': process.env.DEVTO_API_KEY
+      'api-key': devtoApiKey
     }
   });
 }
 
 // ─── Medium ─────────────────────────────────────────────────────
 async function publishToMedium() {
+  const mediumToken = core.getInput('medium_token'); // Get the Medium token from inputs
   const userRes = await axios.get('https://api.medium.com/v1/me', {
-    headers: { Authorization: `Bearer ${process.env.MEDIUM_INTEGRATION_TOKEN}` }
+    headers: { Authorization: `Bearer ${mediumToken}` }
   });
   const userId = userRes.data.data.id;
 
@@ -36,7 +41,7 @@ async function publishToMedium() {
     publishStatus: 'public'
   }, {
     headers: {
-      Authorization: `Bearer ${process.env.MEDIUM_INTEGRATION_TOKEN}`,
+      Authorization: `Bearer ${mediumToken}`,
       'Content-Type': 'application/json'
     }
   });
@@ -44,6 +49,7 @@ async function publishToMedium() {
 
 // ─── Hashnode ───────────────────────────────────────────────────
 async function fetchHashnodePublicationId() {
+  const hashnodeApiKey = core.getInput('hashnode_api_key'); // Get the Hashnode API key from inputs
   const res = await axios.post('https://gql.hashnode.com/', {
     query: `
       {
@@ -57,7 +63,7 @@ async function fetchHashnodePublicationId() {
     `
   }, {
     headers: {
-      Authorization: process.env.HASHNODE_API_KEY,
+      Authorization: hashnodeApiKey,
       'Content-Type': 'application/json'
     }
   });
@@ -86,7 +92,7 @@ async function publishToHashnode() {
     `
   }, {
     headers: {
-      Authorization: process.env.HASHNODE_API_KEY,
+      Authorization: core.getInput('hashnode_api_key'), // Get Hashnode API key from inputs
       'Content-Type': 'application/json'
     }
   });
