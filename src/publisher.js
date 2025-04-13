@@ -101,9 +101,9 @@ async function publishToHashnode() {
 // ─── Master Runner ──────────────────────────────────────────────
 (async () => {
   try {
-    console.log('📤 Publishing to Dev.to...');
-    await publishToDevto();
-    console.log('✅ Dev.to published!');
+    // console.log('📤 Publishing to Dev.to...');
+    // await publishToDevto();
+    // console.log('✅ Dev.to published!');
 
     // console.log('📤 Publishing to Medium...');
     // await publishToMedium();
