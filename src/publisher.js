@@ -8,7 +8,7 @@ const markdownBody = content.replace(/^# .*\n/, '');
 
 // ─── Dev.to ─────────────────────────────────────────────────────
 async function publishToDevto() {
-  console.log(process.env.DEVTO_API_KEY)
+  console.log("Hi", process.env.DEVTO_API_KEY)
   await axios.post('https://dev.to/api/articles', {
     article: {
       title,
