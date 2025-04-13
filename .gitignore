@@ -1,7 +1,7 @@
 node_modules/
 
 # Ignore everything in dist except the bundled action file
-dist/
+dist/*
 !dist/index.js
 
 # Optional: Ignore logs or temp files
