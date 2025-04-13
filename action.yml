@@ -10,7 +10,7 @@ inputs:
   medium_token:
     description: "Medium integration token"
     required: true
-  hashnode_token:
+  hashnode_api_key:
     description: "Hashnode API token"
     required: true
   # cookies_file:
