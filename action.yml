@@ -13,6 +13,9 @@ inputs:
   hashnode_token:
     description: "Hashnode API token"
     required: true
+  cookies_file:
+    description: "Path to Medium cookies.txt"
+    required: true
 runs:
   using: 'node20'
   main: 'dist/index.js'
