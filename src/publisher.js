@@ -57,9 +57,13 @@ async function fetchHashnodePublicationId() {
       query: `
         {
           me {
-            publications {
-              _id
-              title
+            publications(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                }
+              }
             }
           }
         }
@@ -73,25 +77,27 @@ async function fetchHashnodePublicationId() {
     }
   );
 
-  const publications = res.data.data.me.publications;
-  if (!publications || publications.length === 0) {
+  const publicationEdges = res.data.data.me.publications.edges;
+  if (!publicationEdges || publicationEdges.length === 0) {
     throw new Error("No publications found for the user.");
   }
 
-  return publications[0]._id; // assuming you're using the first publication
+  return publicationEdges[0].node.id; // assuming you're using the first publication
 }
 
 
 async function publishToHashnode() {
   const publicationId = await fetchHashnodePublicationId();
+  const hashnodeApiKey = core.getInput('hashnode_api_key');
 
+  // Use variables instead of string interpolation to avoid escaping issues
   await axios.post('https://gql.hashnode.com/', {
     query: `
-      mutation {
+      mutation CreateStory($title: String!, $content: String!, $publicationId: ObjectId!) {
         createStory(input: {
-          title: "${title}",
-          contentMarkdown: """${markdownBody}""",
-          publicationId: "${publicationId}",
+          title: $title,
+          contentMarkdown: $content,
+          publicationId: $publicationId,
           isPartOfPublication: true
         }) {
           post {
@@ -100,10 +106,15 @@ async function publishToHashnode() {
           }
         }
       }
-    `
+    `,
+    variables: {
+      title: title,
+      content: markdownBody,
+      publicationId: publicationId
+    }
   }, {
     headers: {
-      Authorization: core.getInput('hashnode_api_key'), // Get Hashnode API key from inputs
+      Authorization: hashnodeApiKey,
       'Content-Type': 'application/json'
     }
   });
