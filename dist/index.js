@@ -36884,6 +36884,8 @@ async function fetchHashnodePublicationId() {
   );
 
   const publicationEdges = res.data.data.me.publications.edges;
+  console.log(res.data);
+  
   if (!publicationEdges || publicationEdges.length === 0) {
     throw new Error("No publications found for the user.");
   }
