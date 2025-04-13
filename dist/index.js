@@ -36856,6 +36856,8 @@ async function publishToMedium() {
 // ─── Hashnode ───────────────────────────────────────────────────
 async function fetchHashnodePublicationId() {
   const hashnodeApiKey = core.getInput('hashnode_api_key');
+  console.log("Hashnode API Key", hashnodeApiKey);
+  
 
   const res = await axios.post(
     'https://gql.hashnode.com/',
