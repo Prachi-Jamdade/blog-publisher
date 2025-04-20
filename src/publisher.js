@@ -13,7 +13,7 @@ console.log(core.getInput('markdown_file'));
 console.log(core.getInput('devto_api_key') ? "✅ Dev.to key present" : "❌ Dev.to key missing");
 console.log(core.getInput('medium_token') ? "✅ Medium token present" : "❌ Medium token missing");
 console.log(core.getInput('hashnode_api_key') ? "✅ Hashnode key present" : "❌ Hashnode key missing");
-
+ek
 
 // ─── Dev.to ─────────────────────────────────────────────────────
 async function publishToDevto() {
@@ -104,12 +104,11 @@ async function publishToHashnode() {
   // Use variables instead of string interpolation to avoid escaping issues
   await axios.post('https://gql.hashnode.com/', {
     query: `
-      mutation CreateStory($title: String!, $content: String!, $publicationId: ObjectId!) {
-        createStory(input: {
+      mutation CreatePublicationStory($title: String!, $content: String!, $publicationId: ObjectId!) {
+        createPublicationStory(input: {
           title: $title,
           contentMarkdown: $content,
-          publicationId: $publicationId,
-          isPartOfPublication: true
+          publicationId: $publicationId
         }) {
           post {
             slug
